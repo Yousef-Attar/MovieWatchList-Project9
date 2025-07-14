@@ -47,9 +47,46 @@ main .find-film{
     justify-content: center;
     margin: 0px;
     padding: 0px;
+    background-color: #FFFFFF;
+    border-radius: 1px;
 }
 .find-film input{
-    padding-left: 30px; 
+    padding: 0.8em 2em;
     background: url('images/search-icon.png') no-repeat 8px center;
     background-size: 16px 16px;
+    width: 340px;
+    border: 1px solid #D1D5DB;
+    outline: none;
+}
+.find-film input:focus{
+    border: 1px solid gray;
+}
+.find-film button{
+    width: 120px;
+    border: 1px solid #D1D5DB;
+    background-color: #F9FAFB;
+    font-size: 0.9rem;
+    color: #374151;
+    cursor: pointer; 
+}
+.find-film button:active{
+    transform: scale(0.98); /* Slight press effect */
+    background-color: white;
+    color: black;
+}
+
+.search-list{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+.search-list img{
+    width: 70px;
+}
+.search-list h1{
+    font-size: 1.1rem;
+    color: #DFDDDD;
+    font-weight: bold;
 }
