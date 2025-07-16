@@ -75,9 +75,15 @@ main .find-film{
     color: black;
 }
 
-.search-list{
+.flex-column{
     display: flex;
     flex-direction: column;
+}
+.flex-row{
+    display: flex;
+    align-items: center;
+}
+.search-list{
     align-items: center;
     justify-content: center;
     height: 100%;
@@ -86,18 +92,10 @@ main .find-film{
     width: 70px;
 }
 .search-list h1{
-    font-size: 1.1rem;
+    font-size: 1.5rem;
     color: #DFDDDD;
     font-weight: bold;
-}
-/* for trying */
-.flex-column{
-    display: flex;
-    flex-direction: column;
-}
-.flex-row{
-    display: flex;
-    align-items: center;
+    max-width: 50%;
 }
 .search-results{
     gap: 1em;
@@ -124,10 +122,12 @@ main .find-film{
     gap: 3em;
 }
 .movie-details div h1{
+    font-size: 1.5rem;
+    max-width: 50%;
     margin-bottom: 0.2em;
 }
 .movie-details p{
-    max-width: 50%;
+    max-width: 70%;
     color: #6B7280;
     line-height: 2;
 }
@@ -140,7 +140,7 @@ main .find-film{
 }
 hr.divider {
   border: none;
-  border-top: 1px solid gray;
+  border-top: 1px solid #E5E7EB;
   width: 90%; 
   margin: 16px auto;
 }
