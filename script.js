@@ -3,6 +3,7 @@ const findFilm = document.getElementById("findFilm")
 const searchList= document.getElementById("searchList")
 const searchFilmEl = document.getElementById("searchFilm")
 
+if(findFilm){
 findFilm.addEventListener("submit" , e => {
 
     e.preventDefault()
@@ -46,7 +47,7 @@ findFilm.addEventListener("submit" , e => {
                              <span>${data.Runtime}</span>
                              <span>${data.Type}</span>
                              <div>
-                                 <button>+</button>
+                                 <button class="add-btn" data-id="${data.imdbID}">+</button>
                                  <span>watchlist</span>
                              </div>
                          </div>
@@ -70,70 +71,62 @@ findFilm.addEventListener("submit" , e => {
       searchList.innerHTML = `<p>Something went wrong. Please try again later.</p>`
     })
 })
+}
+//The Code below related to WATCHLIST page...
 
-// const movieApi = "http://www.omdbapi.com/?apikey=635bb909";
-// const findFilm = document.getElementById("findFilm");
-// const searchList = document.getElementById("searchList");
-// const searchFilmEl = document.getElementById("searchFilm");
+if(!localStorage.getItem("watchlist")){
+  localStorage.setItem("watchlist" , JSON.stringify([]))
+}
+document.addEventListener('click' , (e) =>{
+  if (e.target.classList.contains("add-btn")) {
+  const movieId = e.target.dataset.id
+  
+  fetch(`${movieApi}&i=${movieId}`)
+  .then(res=> res.json())
+  .then(data =>{
+    const watchlist = JSON.parse(localStorage.getItem("watchlist")) || []
+    const alreadyAdded = watchlist.some(movie => movie.imdbID === data.imdbID)
+    if(alreadyAdded){
+      alert("This movie is already in your watchlist!")
+      return
+    }
+    watchlist.push(data)
+    localStorage.setItem("watchlist" , JSON.stringify(watchlist))
+    alert(`${data.Title} added to your watchlist!`)
+  })
+}
+})
 
-// findFilm.addEventListener("submit", e => {
-//   e.preventDefault();
-//   const query = searchFilmEl.value.trim();
-//   if (!query) return;
+const watchlistContainer = document.getElementById("watchlistSection");
+if (watchlistContainer) {
+  const watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
 
-//   let innerHtml = "";
-//   searchList.innerHTML = "";
-//   searchList.classList.add("search-results");
-//   searchList.classList.remove("search-list");
+  let html = "";
+  watchlist.forEach(movie => {
+    html += `
+      <section class="flex-row result-movie">
+        <img src="${movie.Poster}" alt="poster for the movie">
+        <div class="flex-column movie-details">
+          <div class="flex-row">
+            <h1>${movie.Title}</h1>
+            <div>
+              <img src="images/star.png" alt="rating star yellow" width="15px">
+              <span>${movie.imdbRating}</span>
+            </div>
+          </div>
+          <div class="flex-row">
+            <span>${movie.Runtime}</span>
+            <span>${movie.Type}</span>
+            <div>
+              <button class="remove-btn" data-id="${movie.imdbID}">-</button>
+              <span>watchlist</span>
+            </div>
+          </div>
+          <p>${movie.Plot}</p>
+        </div>
+      </section>
+      <hr class="divider">`;
+  });
 
-//   fetch(`${movieApi}&s=${encodeURIComponent(query)}`)
-//     .then(res => res.json())
-//     .then(data => {
-//       const searchArray = data.Search || [];
-
-//       const detailPromises = searchArray.map(element =>
-//         fetch(`${movieApi}&i=${element.imdbID}`)
-//           .then(res => res.json())
-//           .then(movie => {
-//             // build your snippet
-//             const poster = movie.Poster !== "N/A"
-//               ? movie.Poster
-//               : "images/placeholder.png";
-//             innerHtml += `
-//               <section class="flex-row result-movie">
-//                 <img src="${poster}"
-//                      alt="poster for ${movie.Title}"
-//                      onerror="this.src='images/placeholder.png'">
-//                 <div class="flex-column movie-details">
-//                   <div class="flex-row">
-//                     <h1>${movie.Title}</h1>
-//                     <div>
-//                       <img src="images/star.png" alt="rating star" width="15px">
-//                       <span>${movie.imdbRating}</span>
-//                     </div>
-//                   </div>
-//                   <div class="flex-row">
-//                     <span>${movie.Runtime}</span>
-//                     <span>${movie.Type}</span>
-//                     <div>
-//                       <button>+</button>
-//                       <span>watchlist</span>
-//                     </div>
-//                   </div>
-//                   <p>${movie.Plot}</p>
-//                 </div>
-//               </section>
-//               <hr class="divider">
-//             `;
-//           })
-//       );
-
-//       Promise.all(detailPromises).then(() => {
-//         searchList.innerHTML = innerHtml;
-//       });
-//     })
-//     .catch(err => {
-//       console.error(err);
-//       searchList.innerHTML = `<p>Something went wrong. Please try again later.</p>`;
-//     });
-// });
+  watchlistContainer.innerHTML = html;
+}
