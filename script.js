@@ -73,7 +73,7 @@ findFilm.addEventListener("submit" , e => {
 })
 }
 //The Code below related to WATCHLIST page...
-
+const watchlistContainer = document.getElementById("watchlistSection");
 if(!localStorage.getItem("watchlist")){
   localStorage.setItem("watchlist" , JSON.stringify([]))
 }
@@ -95,12 +95,19 @@ document.addEventListener('click' , (e) =>{
     alert(`${data.Title} added to your watchlist!`)
   })
 }
+
+else if(e.target.classList.contains("remove-btn")){
+  const watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
+  const deleteMovieId = e.target.dataset.id
+  const updatedWatchlist = watchlist.filter((movie) =>{return movie.imdbID !== deleteMovieId})
+  localStorage.setItem("watchlist" , JSON.stringify(updatedWatchlist))
+  renderWatchlistSection()
+}
+
 })
 
-const watchlistContainer = document.getElementById("watchlistSection");
-if (watchlistContainer) {
+  function renderWatchlistSection(){
   const watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
-
   let html = "";
   watchlist.forEach(movie => {
     html += `
@@ -119,7 +126,7 @@ if (watchlistContainer) {
             <span>${movie.Type}</span>
             <div>
               <button class="remove-btn" data-id="${movie.imdbID}">-</button>
-              <span>watchlist</span>
+              <span>Remove</span>
             </div>
           </div>
           <p>${movie.Plot}</p>
@@ -127,6 +134,8 @@ if (watchlistContainer) {
       </section>
       <hr class="divider">`;
   });
-
   watchlistContainer.innerHTML = html;
+}
+if (watchlistContainer) {
+  renderWatchlistSection()
 }
