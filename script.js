@@ -1,11 +1,10 @@
-const movieApi = "http://www.omdbapi.com/?apikey=635bb909"
+const movieApi = "https://www.omdbapi.com/?apikey=635bb909"
 const findFilm = document.getElementById("findFilm")
 const searchList= document.getElementById("searchList")
 const searchFilmEl = document.getElementById("searchFilm")
 
 if(findFilm){
 findFilm.addEventListener("submit" , e => {
-
     e.preventDefault()
     const searchFilm = searchFilmEl.value.trim()
     if (!searchFilm) return
@@ -31,10 +30,10 @@ findFilm.addEventListener("submit" , e => {
         fetch(`${movieApi}&i=${element.imdbID}`)
         .then(res => res.json())
         .then(data => {
-            const poster = data.Poster !=="N/A" ? data.Poster : "images/placeholder.jpg"
+            const poster = data.Poster !="N/A" && data.Poster ? data.Poster : "images/placeholder.jpg"
             innerHtml += `
                  <section class="flex-row result-movie">
-                     <img src="${poster}" alt="poster for the movie">
+                     <img src="${poster}" alt="poster of ${data.Title}">
                      <div class="flex-column movie-details">
                          <div class="flex-row">
                              <h1>${data.Title}</h1>
@@ -95,7 +94,6 @@ document.addEventListener('click' , (e) =>{
     alert(`${data.Title} added to your watchlist!`)
   })
 }
-
 else if(e.target.classList.contains("remove-btn")){
   const watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
   const deleteMovieId = e.target.dataset.id
@@ -112,7 +110,7 @@ else if(e.target.classList.contains("remove-btn")){
   watchlist.forEach(movie => {
     html += `
       <section class="flex-row result-movie">
-        <img src="${movie.Poster}" alt="poster for the movie">
+        <img src="${movie.Poster}" alt="poster of ${movie.Title}">
         <div class="flex-column movie-details">
           <div class="flex-row">
             <h1>${movie.Title}</h1>
@@ -125,7 +123,7 @@ else if(e.target.classList.contains("remove-btn")){
             <span>${movie.Runtime}</span>
             <span>${movie.Type}</span>
             <div>
-              <button class="remove-btn" data-id="${movie.imdbID}">-</button>
+              <button class="remove-btn" id=${movie.Title} data-id="${movie.imdbID}">-</button>
               <span>Remove</span>
             </div>
           </div>
