@@ -32,28 +32,31 @@ findFilm.addEventListener("submit" , e => {
         .then(data => {
             const poster = data.Poster !="N/A" && data.Poster ? data.Poster : "images/placeholder.jpg"
             innerHtml += `
-                 <section class="flex-row result-movie">
-                     <img src="${poster}" alt="poster of ${data.Title}">
-                     <div class="flex-column movie-details">
-                         <div class="flex-row">
-                             <h1>${data.Title}</h1>
-                             <div>
-                                 <img src="images/star.png" alt="rating star yellow" width="15px">
-                                 <span>${data.imdbRating}</span>
-                             </div>
-                         </div>
-                         <div class="flex-row">
-                             <span>${data.Runtime}</span>
-                             <span>${data.Type}</span>
-                             <div>
-                                 <button class="add-btn" data-id="${data.imdbID}">+</button>
-                                 <span>watchlist</span>
-                             </div>
-                         </div>
-                         <p>
-                             ${data.Plot}
-                         </p>
-                     </div>
+                 <section class="result-movie">
+                     <img 
+                    src="${poster}"
+                    alt="poster of ${data.Title}" 
+                    class="movie-poster">
+                      <div class="flex-column movie-details">
+                          <div class="flex-row movie-details-top">
+                              <h1>${data.Title}</h1>
+                              <div class="rating">
+                                  <img src="images/star.png" alt="rating star yellow" id="starIcon" width="15px">
+                                  <span>${data.imdbRating}</span>
+                              </div>
+                          </div>
+                          <div class="flex-row">
+                              <span>${data.Runtime}</span>
+                              <span>${data.Type}</span>
+                              <div>
+                                  <button class="add-btn" data-id="${data.imdbID}">+</button>
+                                  <span>watchlist</span>
+                              </div>
+                          </div>
+                          <p class="movie-plot">
+                              ${data.Plot}
+                          </p>
+                      </div>
                  </section>
                  <hr class="divider"></hr>
            `
@@ -114,8 +117,8 @@ else if(e.target.classList.contains("remove-btn")){
         <div class="flex-column movie-details">
           <div class="flex-row">
             <h1>${movie.Title}</h1>
-            <div>
-              <img src="images/star.png" alt="rating star yellow" width="15px">
+            <div class="movie-details-top">
+              <img src="images/star.png" alt="rating star yellow" width="15px" class="rating">
               <span>${movie.imdbRating}</span>
             </div>
           </div>

@@ -101,6 +101,8 @@ main .find-film{
     gap: 1em;
 }
 .result-movie{
+    display: flex;
+    align-items: center;
     height: 200px;
     width: 100%;
     gap: 1.5em;
@@ -143,4 +145,105 @@ hr.divider {
   border-top: 1px solid #E5E7EB;
   width: 90%; 
   margin: 16px auto;
+}
+
+@media (max-width: 1000px) and (min-width: 650px){
+    .intro-header h1{
+        font-size: 2.2rem;
+    }
+    .search-list h1{
+        font-size: 1.2rem;
+    }
+    .movie-details div h1{
+        font-size: 1.2rem;
+    }
+    .movie-details p{
+        font-size: 0.8rem;
+    }
+}
+@media (max-width: 649px) {
+  .intro-header {
+    flex-direction: column;
+    gap: 1em;
+    text-align: center;
+  }
+
+  .intro-header h1 {
+    font-size: 1.4rem;
+  }
+
+  .search-list h1 {
+    font-size: 1rem;
+    max-width: 90%;
+  }
+
+  .movie-details div h1 {
+    font-size: 1rem;
+    max-width: 90%;
+  }
+
+  .movie-details p {
+    font-size: 0.8rem;
+    max-width: 100%;
+  }
+
+  .result-movie {
+    flex-direction: column;
+    height: auto;
+    padding: 1em;
+    gap: 1em;
+    align-items: flex-start;
+  }
+
+.result-movie img {
+    height: auto;
+    width: 100%;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+.movie-details {
+    width: 100%;
+  }
+.movie-details-top img {
+    width: 12px;
+    height: auto;
+  }
+
+.movie-details-top span {
+    font-size: 0.8rem;
+  }
+.movie-details-top {
+    flex-direction: row;
+    gap: 0.5em;
+  }
+
+  .movie-details span {
+    font-size: 0.8rem;
+  }
+
+  .find-film {
+    flex-direction: column;
+    gap: 0.5em;
+    padding: 1em;
+  }
+
+  .find-film input {
+    width: 95%;
+  }
+
+  .find-film button {
+    background-color: #374151;
+    color: white;
+    padding: 1em;
+    width: 50%;
+    margin-right: auto;
+    margin-left: auto;
+    border-radius: 2em;
+    max-width: 200px;
+  }
+  .rating{
+    flex: 0 0 20%;
+  }
 }
