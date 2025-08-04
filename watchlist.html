@@ -17,7 +17,14 @@
             </div>
         </header>
         <main>
-            <section class=" flex-column search-results" id="watchlistSection"></section>
+            <section class="watchlist-empty no-display" id="emptyWatchlist">
+                <h1>Your watchlist is looking a little empty...</h1>
+                <div class="flex-row">
+                    <button class="explore-movie"><a href="index.html">+</a></button>
+                    <span>Let’s add some movies!</span>
+                </div>
+            </section>
+            <section class="flex-column search-results" id="watchlistSection"></section>
         </main>
         <script src="script.js"></script>
     </body>

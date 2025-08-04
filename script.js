@@ -102,11 +102,20 @@ else if(e.target.classList.contains("remove-btn")){
   const deleteMovieId = e.target.dataset.id
   const updatedWatchlist = watchlist.filter((movie) =>{return movie.imdbID !== deleteMovieId})
   localStorage.setItem("watchlist" , JSON.stringify(updatedWatchlist))
+  if(updatedWatchlist.length === 0)
+    displayEmptyWatchlist()
+  else
   renderWatchlistSection()
 }
-
 })
-
+  function displayEmptyWatchlist(){
+    document.getElementById("emptyWatchlist").classList.remove("no-display")
+    document.getElementById("watchlistSection").classList.add("no-display")
+  }
+  function displayWatchlistSection(){
+    document.getElementById("emptyWatchlist").classList.add("no-display")
+    document.getElementById("watchlistSection").classList.remove("no-display")
+  }
   function renderWatchlistSection(){
   const watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
   let html = "";
@@ -138,5 +147,11 @@ else if(e.target.classList.contains("remove-btn")){
   watchlistContainer.innerHTML = html;
 }
 if (watchlistContainer) {
-  renderWatchlistSection()
+  const watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
+  if(watchlist.length === 0)
+    displayEmptyWatchlist()
+  else{
+    displayWatchlistSection()
+    renderWatchlistSection()
+  }
 }
